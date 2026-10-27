@@ -46,3 +46,16 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Segredos e variáveis de ambiente (use .env.example como modelo)
+.env
+.env.*
+!.env.example
+
+# Android: chaves e caminhos locais
+**/android/local.properties
+**/android/key.properties
+*.jks
+*.keystore
+
+# Atenção: pubspec.lock NÃO deve ser ignorado (lockfile exigido pelo PGC 4.1)
