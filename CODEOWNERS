@@ -1,8 +1,0 @@
-# Revisores automáticos por área (PGC 2 e 5.2).
-# Mudanças em pipelines, scripts e dependências são de maior risco:
-# o desenvolvedor líder é sempre chamado para revisar.
-
-/.github/        @Klebynhow
-/scripts/        @Klebynhow
-pubspec.yaml     @Klebynhow
-pubspec.lock     @Klebynhow
