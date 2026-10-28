@@ -39,4 +39,4 @@ Copie `.env.example` para `.env` se precisar definir valores locais. O `.env` nu
 
 A `main` só aceita Pull Requests (1 aprovação, histórico linear, squash merge).
 Use `feature/<issue>-<descricao>` e título de PR em Conventional Commits
-(ex.: `feat(counter): adiciona botão de reiniciar`). Detalhes no PGC (`docs/PGC_N2_GCPS.docx`).
+(ex.: `feat(counter): adiciona botão de reiniciar`). Detalhes no PGC (`PGC_N2_GCPS.pdf`).
