@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Instalar dependências
+        run: flutter pub get
+      - name: Lint
+        run: flutter analyze
+      - name: Testes com cobertura
+        run: flutter test --coverage
+      - name: Quality gate de cobertura (mínimo 60%)
+        run: |
+          awk -F: '/^LF:/{lf+=$2} /^LH:/{lh+=$2} END{
+            pct=(lf?lh*100/lf:0); printf "Cobertura de linhas: %.1f%%\n", pct;
+            if (pct<60) exit 1 }' coverage/lcov.info
+      - name: Build web
+        run: flutter build web
+
+  dependencias:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+
+  ci-ok:
+    if: always()
+    needs: [qualidade, dependencias]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Falha se algum job falhou
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then
+            exit 1
+          fi
